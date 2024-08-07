@@ -10,8 +10,9 @@ RUN apk update && apk upgrade && \
 
 ENV ARGO_VERSION=v3.5.4
 
-RUN wget -q https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-${ARCH}.gz
-RUN gunzip -f argo-linux-${ARCH}.gz
+#RUN wget -q https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-${ARCH}.gz
+#RUN gunzip -f argo-linux-${ARCH}.gz
+COPY dist/argo-events-linux-${ARCH} argo-linux-${ARCH}
 RUN chmod +x argo-linux-${ARCH}
 RUN mv ./argo-linux-${ARCH} /usr/local/bin/argo
 COPY dist/argo-events-linux-${ARCH} /bin/argo-events

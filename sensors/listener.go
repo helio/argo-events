@@ -19,6 +19,7 @@ package sensors
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -62,6 +63,9 @@ func (sensorCtx *SensorContext) Start(ctx context.Context) error {
 	// sensor for kafka eventbus can be scaled horizontally,
 	// therefore does not require an elector
 	if sensorCtx.eventBusConfig.Kafka != nil {
+		return sensorCtx.listenEvents(ctx)
+	}
+	if os.Getenv("HELIO_DISABLE_LEADER_ELECTION") == "true" {
 		return sensorCtx.listenEvents(ctx)
 	}
 
