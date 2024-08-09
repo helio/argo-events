@@ -130,8 +130,8 @@ func (stream *Jetstream) CreateStream(conn *JetstreamConnection) error {
 	streamConfig := nats.StreamConfig{
 		Name:       common.JetStreamStreamName,
 		Subjects:   []string{common.JetStreamStreamName + ".*.*"},
-		Retention:  nats.LimitsPolicy,
-		Discard:    nats.DiscardOld,
+		Retention:  nats.RetentionPolicy(v.GetInt("retention")),
+		Discard:    nats.DiscardPolicy(v.GetInt("discard")),
 		MaxMsgs:    v.GetInt64("maxMsgs"),
 		MaxAge:     v.GetDuration("maxAge"),
 		MaxBytes:   v.GetInt64("maxBytes"),
